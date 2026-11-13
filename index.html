@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, interactive-widget=resizes-content" />
+  <meta name="theme-color" content="#f8f9fb" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="apple-mobile-web-app-title" content="Расходы" />
+  <meta name="description" content="Быстрый учёт расходов без категорий" />
+  <link rel="stylesheet" href="css/style.css" />
+  <title>Расходы — недельный остаток</title>
+</head>
+<body>
+ <div class="app" id="app">
+   <section class="page page-home active" id="homePage" aria-label="Расходы">
+     <div class="home-content">
+     <header class="topbar"><h1>Расходы</h1><button class="icon-btn" id="openSettings" aria-label="Настройки" type="button"><svg viewBox="0 0 24 24"><path d="M12 15.2a3.2 3.2 0 1 0 0-6.4 3.2 3.2 0 0 0 0 6.4Z"/><path d="m19.3 13.5 1.1.9-1.4 2.5-1.4-.5a8.6 8.6 0 0 1-1.8 1.1l-.3 1.5h-2.9l-.3-1.5a8.6 8.6 0 0 1-1.8-1.1l-1.4.5-1.4-2.5 1.1-.9a8.3 8.3 0 0 1 0-2.1l-1.1-.9L9.1 8l1.4.5a8.6 8.6 0 0 1 1.8-1.1l.3-1.5h2.9l.3 1.5a8.6 8.6 0 0 1 1.8 1.1L19 8l1.4 2.5-1.1.9a8.3 8.3 0 0 1 0 2.1Z" transform="translate(-2 -1)"/></svg></button></header>
+     <section class="balance-card" aria-label="Остаток на неделю">
+       <p class="eyebrow">Остаток на неделю</p>
+       <div class="balance-number" id="balanceValue">18 500 ₽</div>
+       <div class="progress-track" aria-hidden="true"><div class="progress-fill" id="progressFill"></div></div>
+       <div class="balance-caption"><span>Бюджет <b id="budgetHome">18 500 ₽</b></span><span>Потрачено <b id="spentHome">0 ₽</b></span></div>
+     </section>
+     <div class="entry-panel">
+       <label class="sr-only" for="amountDisplay">Сумма расхода</label>
+       <div class="entry-display" id="amountDisplay" role="textbox" aria-label="Сумма расхода" aria-readonly="true"><span id="amountValue">0</span><span class="currency"> ₽</span><span class="caret"></span></div>
+       <button class="primary-btn" id="addExpense" type="button">Добавить расход</button>
+     </div>
+     <button class="history-shortcut" id="openHistory" type="button"><span>История расходов</span><span class="history-tail"><span id="lastExpenses">Пока пусто</span><svg viewBox="0 0 24 24"><path d="m9 5 7 7-7 7" /></svg></span></button>
+     </div>
+     <div class="home-spacer"></div>
+     <div class="keypad" aria-label="Цифровая клавиатура">
+       <button type="button" data-key="1">1</button><button type="button" data-key="2">2</button><button type="button" data-key="3">3</button>
+       <button type="button" data-key="4">4</button><button type="button" data-key="5">5</button><button type="button" data-key="6">6</button>
+       <button type="button" data-key="7">7</button><button type="button" data-key="8">8</button><button type="button" data-key="9">9</button>
+       <button type="button" data-key=",">,</button><button type="button" data-key="0">0</button><button type="button" data-key="back" aria-label="Удалить цифру"><svg class="backspace" viewBox="0 0 24 24"><path d="M9.5 4H21v16H9.5L2 12l7.5-8Z"/><path d="m12 9 5 6m0-6-5 6" /></svg></button>
+     </div>
+   </section>
+   <section class="page page-secondary" id="historyPage" aria-label="История расходов" hidden>
+     <header class="secondary-header"><button type="button" class="back-btn" data-back aria-label="На главный экран"><svg viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"/></svg></button><h2>История</h2><span class="header-slot"></span></header>
+     <nav class="filters" aria-label="Период"><button class="filter active" data-filter="all">Все</button><button class="filter" data-filter="today">Сегодня</button><button class="filter" data-filter="week">Неделя</button><button class="filter" data-filter="month">Месяц</button></nav>
+     <div class="history-summary"><span>Расходов за период</span><strong id="historySum">0 ₽</strong></div>
+     <div id="historyList" class="history-list"></div>
+   </section>
+   <section class="page page-secondary" id="settingsPage" aria-label="Настройки" hidden>
+     <header class="secondary-header"><button type="button" class="back-btn" data-back aria-label="На главный экран"><svg viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"/></svg></button><h2>Настройки</h2><span class="header-slot"></span></header>
+     <div class="settings-group">
+       <button class="setting-row" data-setting="budget"><span><strong>Недельный бюджет</strong><small id="settingsBudget">18 500 ₽</small></span><span class="chevron">›</span></button>
+       <button class="setting-row" data-setting="balance"><span><strong>Текущий остаток</strong><small id="settingsBalance">18 500 ₽</small></span><span class="chevron">›</span></button>
+       <button class="setting-row" data-setting="auto"><span><strong>Автопополнение</strong><small id="settingsAuto">Воскресенье, 00:00 (Самара)</small></span><span class="chevron">›</span></button>
+     </div>
+     <p class="settings-note">Каждое воскресенье к остатку прибавляется недельный бюджет. Если приложение закрыто, начисление выполнится при следующем открытии.</p>
+     <div class="settings-group">
+       <button class="setting-row" id="exportBackup"><span><strong>Экспорт копии</strong><small>Сохранить расходы и настройки в файл</small></span><span class="chevron">›</span></button>
+       <button class="setting-row" id="importBackup"><span><strong>Импорт копии</strong><small>Восстановить данные из файла</small></span><span class="chevron">›</span></button>
+     </div>
+     <button class="danger-row" id="clearHistory">Удалить все расходы</button>
+     <p class="settings-note">Данные хранятся только на этом устройстве в браузере. При очистке данных браузера они могут исчезнуть.</p>
+   </section>
+ </div>
+ <div class="modal-layer" id="modalLayer" hidden><div class="modal-scrim" data-close-modal></div><section class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle"><div class="modal-handle"></div><div class="modal-head"><h2 id="modalTitle">Изменить</h2><button type="button" class="modal-x" data-close-modal aria-label="Закрыть">×</button></div><div id="modalBody"></div></section></div>
+ <input id="backupFile" type="file" accept="application/json,.json" hidden />
+ <div class="toast" id="toast" role="status" aria-live="polite"></div>
+ <div class="fatal-layer" id="fatalLayer" hidden><div class="fatal-card"><h2>Данные недоступны</h2><p id="fatalMessage"></p><p>Приложение остановлено, чтобы не потерять существующие расходы. Проверьте доступ к памяти Safari или восстановите резервную копию, предварительно сохранив текущие данные браузера.</p><button id="retryLoad" type="button">Повторить попытку</button> <button id="recoverBackup" type="button">Восстановить из копии</button></div></div>
+ <script src="js/storage.js"></script>
+ <script src="js/app.js"></script>
+</body>
+</html>
